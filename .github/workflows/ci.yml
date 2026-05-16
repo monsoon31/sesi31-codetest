@@ -51,7 +51,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # 1. Setup Node.js (Sesuaikan versinya dengan aplikasi Anda)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 2. Install dependensi aplikasi Anda
+      - name: Install Application Dependencies
+        run: npm install
+
+      # 3. Jalankan aplikasi di background (Wajib pakai tanda &)
+      - name: Start Application Server
+        run: npm start &
+
+      # 4. Beri jeda beberapa detik agar server benar-benar siap
+      - name: Wait for Server to be Ready
+        run: sleep 5
+
+      # 5. Setup k6 seperti biasa
       - name: Setup k6
         uses: grafana/setup-k6-action@v1
+
+      # 6. Jalankan k6 Smoke Test
       - name: Run k6 Smoke Test
         run: k6 run loadtest/script.js
