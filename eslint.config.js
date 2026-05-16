@@ -20,5 +20,13 @@ module.exports = [
       "no-console": "off",
       "eqeqeq": ["error", "always"]
     }
-  })
+  }),
+  {
+    languageOptions: {
+      globals: {
+        __ENV: "readonly" // Memberitahu ESLint bahwa __ENV adalah global variable dari k6
+      }
+    }
+  }
+
 ];
